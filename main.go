@@ -17,6 +17,7 @@ import (
 
 	"github.com/gorilla/mux"
 	"github.com/jmoiron/sqlx"
+	"github.com/joho/godotenv"
 	_ "github.com/mattn/go-sqlite3"
 	"github.com/mdp/qrterminal"
 	"go.mau.fi/whatsmeow"
@@ -165,8 +166,16 @@ func GetReplies(db *sqlx.DB) http.HandlerFunc {
 }
 
 func main() {
+	err := godotenv.Load()
+	if err != nil {
+		log.Fatal("Error loading .env file")
+	}
+
+	database_type := os.Getenv("DATABASE_TYPE")
+	database_url := os.Getenv("DATABASE_URL")
+
 	// db products
-	db := postgres.ConnectDB()
+	db := postgres.ConnectDB(database_type, database_url)
 
 	// db auth whatsapp
 	dbLog := waLog.Stdout("Database", "DEBUG", true)

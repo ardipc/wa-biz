@@ -7,8 +7,8 @@ import (
 	_ "github.com/lib/pq"
 )
 
-func ConnectDB() *sqlx.DB {
-	db, err := sqlx.Connect("postgres", "user=postgres.cymagsnihvppzuqevvge password=MEr43y5F78QfURwg host=aws-0-ap-southeast-1.pooler.supabase.com port=5432 dbname=postgres")
+func ConnectDB(t string, u string) *sqlx.DB {
+	db, err := sqlx.Connect(t, u)
 	if err != nil {
 		log.Fatalln(err)
 	}
